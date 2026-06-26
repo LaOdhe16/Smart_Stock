@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Laporan{% endblock %}
+{% block page_title %}Laporan Stok{% endblock %}
+{% block page_subtitle %}Rekap data persediaan barang{% endblock %}
+
+{% block topbar_action %}
+<button class="btn btn-success" id="btnCetak">
+  <i class="bi bi-printer me-1"></i> Cetak Laporan
+</button>
+{% endblock %}
+
+{% block content %}
+<!-- Filter -->
+<div class="card border-0 shadow-sm mb-3 no-print">
+  <div class="card-body">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold mb-1">Jenis Laporan</label>
+        <select class="form-select" id="jenisLaporan">
+          <option value="stok">Laporan Stok Barang</option>
+          <option value="transaksi">Laporan Transaksi</option>
+          <option value="masuk">Laporan Barang Masuk</option>
+          <option value="keluar">Laporan Barang Keluar</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold mb-1">Dari Tanggal</label>
+        <input type="date" class="form-control" id="tglAwal"/>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small fw-semibold mb-1">Sampai Tanggal</label>
+        <input type="date" class="form-control" id="tglAkhir"/>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary w-100" id="btnTampilkan">
+          <i class="bi bi-funnel me-1"></i> Tampilkan
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header Print -->
+<div class="print-header d-none">
+  <div class="text-center mb-3">
+    <h4 class="fw-bold">SMART STOCK</h4>
+    <h6 id="judulCetak">Laporan Stok Barang</h6>
+    <p class="small text-muted" id="periodeLabel"></p>
+    <hr/>
+  </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-3" id="summarySection">
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body py-3">
+        <h4 class="fw-bold text-primary mb-0" id="sumTotal">0</h4>
+        <small class="text-muted" id="sumTotalLabel">Total Barang</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body py-3">
+        <h4 class="fw-bold text-success mb-0" id="sumMasuk">0</h4>
+        <small class="text-muted">Total Masuk</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body py-3">
+        <h4 class="fw-bold text-warning mb-0" id="sumKeluar">0</h4>
+        <small class="text-muted">Total Keluar</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body py-3">
+        <h4 class="fw-bold text-danger mb-0" id="sumMenipis">0</h4>
+        <small class="text-muted">Stok Menipis</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabel Laporan -->
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white fw-semibold border-bottom d-flex justify-content-between align-items-center">
+    <span id="titleTabel">Laporan Stok Barang</span>
+    <small class="text-muted" id="tglGenerate"></small>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="tabelLaporan">
+        <thead class="table-primary" id="headerLaporan"></thead>
+        <tbody id="bodyLaporan">
+          <tr><td colspan="10" class="text-center py-4 text-muted">Pilih jenis laporan dan klik Tampilkan</td></tr>
+        </tbody>
+        <tfoot id="footerLaporan" class="table-light fw-bold"></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/laporan.js') }}"></script>
+{% endblock %}
